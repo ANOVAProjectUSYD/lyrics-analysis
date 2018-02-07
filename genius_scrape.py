@@ -2,10 +2,11 @@ import requests
 import urllib.request
 import urllib.parse
 import json
+from bs4 import BeautifulSoup
 
-# Search Genius on any search term
+
 def search(term):
-    # Create Genuis API request
+    '''Search Genius API.'''
     base = "https://api.genius.com/"
     search = "search?q="
     query = base + search + urllib.parse.quote(term)
@@ -18,14 +19,27 @@ def search(term):
     raw = response.read()
     data = json.loads(raw)['response']['hits']
     for item in data:
-        # Print the artist and title of each result
+        # print the artist and title of each result
         print(item['result']['primary_artist']['name']
               + ': ' + item['result']['title'])
 
+        get_lyrics(item)
 
-# Seach Genuis on API artist id
+
+def get_lyrics(item):
+    '''Grabs the lyrics of the song via using the song's URL'''
+    # get url of song lyrics and query for it
+    URL = item['result']['url']
+    print(URL)
+    page = requests.get(URL)
+    html = BeautifulSoup(page.text, "html.parser") # extract the page's HTML as a string
+    # Scrape the song lyrics from the HTML
+    lyrics = html.find("div", class_="lyrics").get_text()
+    print(lyrics)
+
+
 def search_artist(artist_id):
-    # Create Genuis API request
+    '''Search on Genius API via Artist ID.'''
     base = "https://api.genius.com/"
     search = "artists/"
     query = base + search + str(artist_id)
@@ -42,11 +56,12 @@ def search_artist(artist_id):
 
 
 def main():
-    # Example searches
+    # example searches
     term = 'Kanye West'
     artist_id = 72
-    search_artist(artist_id)
+    #search_artist(artist_id)
     search(term)
+
 
 
 if __name__ == "__main__":

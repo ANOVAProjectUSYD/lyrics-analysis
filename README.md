@@ -2,6 +2,18 @@
 Scraping lyrics and analysing song trends.
 
 
+## Tasks for Mitch
+
+I'll need you to be able to access all the songs Kanye West has produced. Probably this link below looks promising.
+Good resource to use:
+https://gist.github.com/imdkm/a60247b59ff1881fa4bb8846a9b44c96
+
+I've gotten the function working to scrape the song if we have it's URL. e.g. https://genius.com/Kanye-west-mercy-lyrics
+
+However, we may have to change this if the results you query from all the songs of Kanye West only gives you song ID or whatever. Ideally, if you can get all the songs from Kanye West and from that, get the URL, we can then pass it into my function to make things easier.
+
+Don't forget to install everything in the requirements.txt file! I downloaded a new package.
+
 ## Setting up
 
 ### Intro to Python3 setup
